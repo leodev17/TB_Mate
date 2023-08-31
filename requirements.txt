@@ -1,2 +1,3 @@
 networkx
 pydot
+streamlit_option_menu
