@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 import networkx as nx
-
+from streamlit_option_menu import option_menu
 
 def pedir_matriz(tamanio):
     st.write("Ok, se usara una matriz ", tamanio, "x", tamanio)
@@ -22,6 +22,10 @@ def pedir_matriz(tamanio):
         #Nos quedamos solo con la parte superior y le sumamos la transpuesta para obtener una m. simetrica
         arr = np.triu(arr) + np.triu(arr, 1).T
         calcular_grafos(arr)
+
+
+
+
 
 
 def grafo_desde_matriz(matriz):
