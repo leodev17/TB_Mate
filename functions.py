@@ -6,22 +6,44 @@ from streamlit_option_menu import option_menu
 
 def pedir_matriz(tamanio):
     st.write("Ok, se usara una matriz ", tamanio, "x", tamanio)
-    A = np.zeros((tamanio, tamanio))
-    c = np.arange(tamanio)
-    c = c.astype(str)
-    df = pd.DataFrame(A, columns=c)
-    edited_df = st.data_editor(df)
-    if st.button("Confirmar matriz"):
-        arr = edited_df.to_numpy()
-        if (arr == arr.T).all():
-            calcular_grafos(arr)
-        else:
-            st.error("La matriz ingresada no es simetrica")
-    if st.button("Crear matriz aleatoria"):
+    selected = option_menu(
+        menu_title=None,
+        options=["Ingreso manual de terminos", "Generacion aleatoria", "Cargar CSV"],
+        icons=["123", "dice-5", "filetype-csv"],
+        default_index=0,
+        orientation="horizontal"
+    )
+
+    if selected == "Ingreso manual de terminos":
+        A = np.zeros((tamanio, tamanio))
+        c = np.arange(tamanio)
+        c = c.astype(str)
+        df = pd.DataFrame(A, columns=c)
+        edited_df = st.data_editor(df)
+        if st.button("Confirmar matriz"):
+            arr = edited_df.to_numpy()
+            if (arr == arr.T).all():
+                calcular_grafos(arr)
+            else:
+                st.error("La matriz ingresada no es simetrica")
+    if selected == "Generacion aleatoria":
         arr = np.random.choice([0, 1], size=(tamanio, tamanio), p=[0.8, 0.2])
         #Nos quedamos solo con la parte superior y le sumamos la transpuesta para obtener una m. simetrica
         arr = np.triu(arr) + np.triu(arr, 1).T
         calcular_grafos(arr)
+    if selected == "Cargar CSV":
+        data = st.file_uploader("Cargue un archivo CSV que contenga los valores de una matriz de adyacencia simetrica, "
+                              "sin encabezados y sin indices")
+        if data is not None:
+            data_df = pd.read_csv(data, header=None, delimiter=";")
+            arr_csv = data_df.to_numpy()
+            if (arr_csv != arr_csv.T).all():
+                st.error("No sea pelotudo, la matriz no es simetrica, al programita le da un infarto si no es simetrica"
+                         " pndejo no dura nada")
+            else:
+                st.dataframe(data_df)
+                calcular_grafos(arr_csv)
+
 
 
 
