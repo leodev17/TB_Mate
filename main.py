@@ -2,6 +2,7 @@ from functions import *
 st.set_page_config(layout="wide")
 
 with st.sidebar:
+    st.image("UPC.png")
     selected=option_menu(
         menu_title="Menu Principal",
         options=["Presentacion del proyecto", "Enunciado del problema", "Sustento teorico", "Solucion propuesta","Creditos"],
@@ -53,7 +54,7 @@ if selected == "Solucion propuesta":
         tam = st.text_input("¿De que tamaño desea ingresar su matriz de adyacencia?")
         if len(tam) > 0:
             if tam not in num_aceptados:
-                st.error("Numero invalido")
+                st.error("No sea pelotudo, literalmente ahi dice los numeros que debe ingresar")
             else:
                 tam = int(tam)
                 pedir_matriz(tam)
