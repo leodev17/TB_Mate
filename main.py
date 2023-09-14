@@ -96,7 +96,7 @@ if selected == "Solucion propuesta":
         tam = st.text_input("¿De que tamaño desea ingresar su matriz de adyacencia?")
         if len(tam) > 0:
             if tam not in num_aceptados:
-                st.error("No sea pelotudo, literalmente ahi dice los numeros que debe ingresar")
+                st.error("El tamaño de la matriz no se encuentra en el rango indicado")
             else:
                 tam = int(tam)
                 pedir_matriz(tam)
