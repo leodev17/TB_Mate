@@ -36,15 +36,10 @@ def pedir_matriz(tamanio):
         edited_df = st.data_editor(df)
         if st.button("Confirmar matriz"):
             arr = edited_df.to_numpy()
-            if (arr == arr.T).all():
-                encontrar_componentes_conexas(edited_df)
-            else:
-                st.error("La matriz ingresada no es simetrica")
+            encontrar_componentes_conexas(edited_df)
 
     if selected == "Generacion aleatoria":
-        arr = np.random.choice([0, 1], size=(tamanio, tamanio), p=[0.8, 0.2])
-        #Nos quedamos solo con la parte superior y le sumamos la transpuesta para obtener una m. simetrica
-        arr = np.triu(arr) + np.triu(arr).T
+        arr = np.random.choice([0, 1], size=(tamanio, tamanio), p=[0.85, 0.15])
         df = pd.DataFrame(arr, index=nombres, columns=nombres)
         st.write("La matriz de adyacencia es:")
         st.dataframe(df)
@@ -56,13 +51,9 @@ def pedir_matriz(tamanio):
         if data is not None:
             data_df = pd.read_csv(data, header=None, delimiter=";")
             arr_csv = data_df.to_numpy()
-            if (arr_csv != arr_csv.T).all():
-                st.error("No sea pelotudo, la matriz no es simetrica, al programita le da un infarto si no es simetrica"
-                         " pndejo no dura nada")
-            else:
-                df = pd.DataFrame(arr_csv, index=nombres, columns=nombres)
-                st.dataframe(df)
-                encontrar_componentes_conexas(df)
+            df = pd.DataFrame(arr_csv, index=nombres, columns=nombres)
+            st.dataframe(df)
+            encontrar_componentes_conexas(df)
 
     if selected == "Problema de aplicacion":
         st.write("Este concepto puede parecer muy abstracto y que no tiene mucho sentido estudiarlo. Pero "
@@ -121,7 +112,7 @@ def pedir_matriz(tamanio):
 
 
 def grafo_desde_df(df):
-    grafo = nx.Graph()
+    grafo = nx.DiGraph()
     # Obtener el número de nodos en la matriz
     num_nodos = df.shape[0]
 
@@ -131,54 +122,76 @@ def grafo_desde_df(df):
     # Recorrer la matriz de adyacencia y agregar las conexiones al grafo
     for i in nombres:
         for j in nombres:
-            if df.loc[i, j] == 1 or df.loc[i, j] == 2:
-                grafo.add_edge(i, j)
+            if df.loc[i, j] == 1:
+                grafo.add_edge(i, j, weight=1)
     return grafo
 
 
 def encontrar_componentes_conexas(df):
-    matriz = df.to_numpy()
-    # Se obtiene el tamanio de la matriz cuadrada
-    num_nodos = matriz.shape[0]
-    # El conjunto visitados guardara los nodos que ya fueron recorridos para no volver a repetirlos
-    visitados = set()
-    # En el siguiente conjunto se guardaran otros conjuntos en el que cada uno agrupa los nodos conectados
-    componentes_conexas = []
-
-    #Se recorre to.do el subgrafo con el algoritmo DFS
-    def buscar_vecinos(nodo):
-        # Se empieza el recorrido con el nodo seleccionado, se coloca en los nodos visitados y tambien
-        # como parte de una componente conexa
-        visitados.add(nodo)
-        componente_actual.add(nodo)
-        # Se buscaran los nodos mas cercanos con el que el nodo actual este conectado
-        for vecino in df.index:
-            # Si se encuentra un nuevo nodo y se encuentra conectado directamente, entonces se aplica
-            # la funcion nuevamente para buscar a sus vecinos directos de este vecino.
-            # Al aplicar la funcion tambien se añade este nodo al componente y se siguen buscando mas vecinos
-            if df.loc[nodo, vecino] == 1 and vecino not in visitados:
-                buscar_vecinos(vecino)
     st.text("El grafo resultante de la matriz es:")
     grafo = grafo_desde_df(df)
     dot = nx.nx_pydot.to_pydot(grafo)
+    dot.set_rankdir("TB")  # Cambiar la dirección de las flechas (TB = de arriba a abajo)
+    # Personalizar las aristas para que sean solo en una dirección
+    for edge in dot.get_edges():
+        edge.set("dir", "end")
     st.graphviz_chart(dot.to_string())
-    st.write("Se recorrera cada componente conexa con el algoritmo DFS."
-            "\nAsi que para cada nodo, se buscaran los otros nodos a los que se pueden llegar.")
+    # Convertir el DataFrame en una matriz numpy
+    matriz = df.to_numpy()
+    # Obtener el número de nodos en el grafo
+    num_nodos = matriz.shape[0]
+    # Conjunto para almacenar nodos visitados
+    visitados = set()
+    # Lista de conjuntos para almacenar componentes fuertemente conexas
+    componentes_fuertemente_conexas = []
+
+    # Función DFS auxiliar para encontrar el orden topologico
+    def dfs_l(nodo, componente_actual):
+        visitados.add(nodo)
+        for vecino in df.index:
+            if df.loc[nodo, vecino] == 1 and vecino not in visitados:
+                dfs_l(vecino, componente_actual)
+        componente_actual.insert(0, nodo)
+
+    # Función DFS para buscar vecinos
+    def dfs(nodo, componente_actual):
+        visitados.add(nodo)
+        componente_actual.add(nodo)
+        for vecino in df.index:
+            if df.loc[nodo, vecino] == 1 and vecino not in visitados:
+                dfs(vecino, componente_actual)
+
+    # Primer paso de Kosaraju: DFS para obtener el ordenamiento topológico inverso
+    pila_orden = []
     for nodo in df.index:
         if nodo not in visitados:
-            st.write("Hay que elegir un nodo cualquiera, uno que no se haya recorrido antes.\n"
-                     "Los nodos ya recorridos son " + str(visitados).replace("set()", "{}") + "\nPara este"
-                     " caso analizaremos el nodo "+str(nodo)+" y buscaremos a todos los nodos a \nlos que pueda llegar.")
+            dfs_l(nodo, pila_orden)
+    pila_orden=pila_orden[::-1]
+    # Transponer la matriz para obtener el grafo dirigido inverso
+    df = df.transpose()
+
+    # Limpiar el conjunto de nodos visitados
+    visitados.clear()
+
+    # Segundo paso de Kosaraju: DFS para encontrar componentes fuertemente conexas
+    while pila_orden:
+        nodo = pila_orden.pop()
+        if nodo not in visitados:
             componente_actual = set()
-            buscar_vecinos(nodo)
+            dfs(nodo, componente_actual)
             st.write("Los nodos que conforman esta componente conexa son: " + str(componente_actual))
-            SG=nx.subgraph(grafo_desde_df(df), componente_actual)
+            SG = nx.subgraph(grafo_desde_df(df.transpose()), componente_actual)
             dot = nx.nx_pydot.to_pydot(SG)
+            dot.set_rankdir("TB")  # Cambiar la dirección de las flechas (TB = de arriba a abajo)
+            # Personalizar las aristas para que sean solo en una dirección
+            for edge in dot.get_edges():
+                edge.set("dir", "end")
             st.graphviz_chart(dot.to_string())
-            componentes_conexas.append(componente_actual)
-    st.write("Por lo tanto, al final nos quedan las siguientes componentes conexas:")
-    for i in range(len(componentes_conexas)):
-        st.write("La componente conexa " + str(i+1) + " esta compuesta por: " + str(componentes_conexas[i]))
+            componentes_fuertemente_conexas.append(componente_actual)
+
+    for i, componente in enumerate(componentes_fuertemente_conexas):
+        st.write(f"Componente {i + 1}: {componente}")
+
 
 def resolver_problema(df):
     dep_A=set(nombres[:3])
@@ -282,6 +295,9 @@ def resolver_problema(df):
                 st.write("Podemos notar que en esta componente, en la que todos los nodos estan conectados, que los"
                          " miembros del Departamento E se encuentran incluidos, por lo que el Departamento E esta "
                          "totalmente comunicado.")
+
+    st.write("Por lo tanto, la solucion de este problema es que solo los Departamentos que tienen a todos sus "
+             "empleados conectados entre si son los Departamentos A y C")
 
     st.write("Por lo tanto, la solucion de este problema es que solo los Departamentos que tienen a todos sus "
              "empleados conectados entre si son los Departamentos A y C")
