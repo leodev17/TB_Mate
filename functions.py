@@ -62,7 +62,7 @@ def pedir_matriz(tamanio):
                  "y avisame cuando te sientas preparado.")
         decision = st.radio(
             "¿Estas listo?",
-            ["Mm no lo se", "***Estoy listo, vamos a por ello***", ":rainbow[Me gusta el pn]"])
+            ["Mm no lo se", "***Estoy listo, vamos a por ello***", ":rainbow[No]"])
         if decision == ":rainbow[No]":
             st.write("Lo suponia")
         if decision == "***Estoy listo, vamos a por ello***":
