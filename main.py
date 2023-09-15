@@ -58,10 +58,9 @@ if selected == "Sustento teorico":
                  "representa una 'isla' de nodos que están interconectados dentro del grafo, y un grafo puede tener "
                  "una o varias de estas componentes. Estudiar las componentes conexas es esencial para analizar la "
                  "estructura y las propiedades de un grafo.")
-        st.write("Por ejemplo, en la siguiente imagen podemos encontrar 3 componentes conexas:")
+        st.write("Por ejemplo, en la siguiente imagen podemos encontrar algunas componentes conexas:")
         st.image("comp.png")
-    with c2:
-        st.header("Algoritmo DFS y la busqueda de componentes conexas")
+        st.header("Algoritmo DFS")
         st.write("El algoritmo de Búsqueda en Profundidad (Depth-First Search o DFS en inglés) es un algoritmo de "
                  "recorrido de grafos que se utiliza para explorar y analizar la estructura de un grafo.")
         st.subheader("Algoritmo DFS")
@@ -71,7 +70,8 @@ if selected == "Sustento teorico":
                  "visitados hasta que llegues a un nodo que no tenga nodos adyacentes no visitados.\n6. Retrocede al "
                  "nodo anterior y repite el paso 3 para cualquier nodo adyacente no visitado que aún no hayas explorado.\n"
                  "Repite este proceso hasta que hayas visitado todos los nodos alcanzables desde el nodo de origen.")
-        st.subheader("Encontrar Componentes Conexas con DFS:")
+    with c2:
+        st.subheader("Encontrar Componentes Conexas en un grafo no dirigido con DFS:")
         st.write("Para encontrar componentes conexas en un grafo utilizando "
                  "DFS, puedes seguir estos pasos:\n1. Inicia el algoritmo DFS desde un nodo arbitrario en el grafo.\n"
                  "2. Mientras realizas el recorrido DFS, registra todos los nodos que visitas en la componente conexa actual.\n"
@@ -85,6 +85,27 @@ if selected == "Sustento teorico":
                  "grafo. Cada componente conexa representa un conjunto de nodos que están interconectados entre sí y "
                  "se pueden encontrar mediante este proceso de búsqueda.")
         st.image("https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif")
+        st.subheader("Encontrar Componentes fuertemente conexas con el Algoritmo de Kosaraju:")
+        st.write("Para encontrar componentes conexas en un grafo utilizando el algoritmo de Kosaraju, que es una "
+                 "variante del algoritmo de búsqueda en profundidad (DFS), puedes seguir estos pasos:\n"
+                 "1. Realiza un primer recorrido DFS: Inicia el algoritmo seleccionando un nodo arbitrario en el grafo "
+                 "y realiza un recorrido DFS desde ese nodo. Mientras realizas este recorrido DFS, registra el orden "
+                 "en el que visitas los nodos.\n"
+                 "2. Reversa el grafo: Una vez que hayas completado el primer recorrido DFS, crea un grafo inverso "
+                 "al intercambiar la dirección de todas las aristas en el grafo original. Esto significa que si había "
+                 "una arista de A a B en el grafo original, en el grafo inverso habrá una arista de B a A.\n"
+                 "3. Realiza un segundo recorrido DFS en el grafo inverso: A partir de un nodo que aún no haya sido "
+                 "visitado en el grafo inverso, realiza un nuevo recorrido DFS. Esta vez, mientras recorres el grafo "
+                 "inverso, registra todos los nodos que visitas en una componente conexa actual. Cuando llegues a un "
+                 "punto en el que no puedas visitar más nodos desde el nodo actual, habrás identificado una componente"
+                 " conexa completa.\n"
+                 "4. Continúa el proceso: Repite el segundo recorrido DFS seleccionando un nuevo nodo no visitado en "
+                 "el grafo inverso y encuentra una nueva componente conexa. Continúa este proceso hasta que hayas "
+                 "encontrado todas las componentes conexas en el grafo.")
+        st.write("El algoritmo de Kosaraju es eficaz para encontrar componentes conexas en un grafo dirigido y se basa "
+                 "en la idea de que las componentes conexas en el grafo original son también componentes conexas en el "
+                 "grafo inverso.")
+        st.image("kosa.jpg")
 
 if selected == "Solucion propuesta":
     st.title("Solucion propuesta")
@@ -103,9 +124,5 @@ if selected == "Solucion propuesta":
 
 if selected == "Creditos":
     st.title("Creditos del proyecto")
-    st.write("Idea del proyecto: ChatGPT")
-    st.write("Algoritmos usados para el recorrido de grafos y sugerencia de las librerias utilizadas: ChatGPT")
-    st.write("Experto en Streamlit que ayudo en definir funciones que den una interfaz intuitiva para el usuario: ChatGPT")
-    st.write("Redaccion del contenido teorico: ChatGPT")
-    st.write("Encargado de arreglar los errores del programa: ChatGPT")
-    st.write("Los que haran pasar el proyecto como suyo: Demas miembros del equipo")
+    st.write("Este proyecto fue hecho como Trabajo Evaluado para el curso de Matemática Computacional de la UPC en el ciclo 2023-2")
+    st.write("Los miembros participantes para este proyecto son: Leonardo Ccorahua, Ramiro Guzmán, Piero Velarde, Carlos Pingus y Russell Romero")
