@@ -63,7 +63,7 @@ def pedir_matriz(tamanio):
         decision = st.radio(
             "¿Estas listo?",
             ["Mm no lo se", "***Estoy listo, vamos a por ello***", ":rainbow[Me gusta el pn]"])
-        if decision == ":rainbow[Me gusta el pn]":
+        if decision == ":rainbow[No]":
             st.write("Lo suponia")
         if decision == "***Estoy listo, vamos a por ello***":
             st.subheader("Problema: Red de Comunicaciones en una Empresa")
