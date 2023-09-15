@@ -69,38 +69,46 @@ def pedir_matriz(tamanio):
             st.subheader("Problema: Red de Comunicaciones en una Empresa")
             st.write("Se tiene una empresa que acaba de incorporar a 15 nuevos empleados. Luego, se ha llevado a cabo un estudio "
                      "exhaustivo sobre las relaciones de comunicación entre los empleados durante un período específico."
-                     " Cada empleado ha mantenido comunicación con uno o varios compañeros, generando un conjunto de "
-                     "relaciones de comunicación individuales.")
-            st.write("Las que se encontraron son: (Ana, Amy), (Amy, Mia), (Leo, Ben), (Ben, Amy), (Max, Ava), "
-                     "(Sam, Ava), (Sam, Pau), (Pau, Ava), (Eva, Ray), (Kim, Zoe), (Kim, Eli), (Eli, Ian)")
-            st.write("Posteriormente, la empresa ha organizado a sus empleados en varios departamentos de trabajo con "
-                     "el objetivo de mejorar la eficiencia y la colaboración.")
-            st.write("Los empleados en cada departamento son:")
-            st.write("Departamento A: Ana, Leo, Mia")
-            st.write("Departamento B: Sam, Max, Eva")
-            st.write("Departamento C: Kim, Zoe, Ian")
-            st.write("Departamento D: Amy, Ben, Eli")
-            st.write("Departamento E: Ava, Ray, Pau")
-
+                     " Se sabe que cada empleado, como fruto de un complejo intercambio de información, tiene el correo"
+                     " electrónico de uno o varios compañeros, generando un conjunto de relaciones de comunicación individuales.")
+            st.write("La informacion encontrada es que:")
+            st.write("Ana conoce los correos de: Mia")
+            st.write("Leo conoce los correos de: Eva")
+            st.write("Mia conoce los correos de: Leo y Max")
+            st.write("Sam conoce los correos de: Ben y Ava")
+            st.write("Max conoce los correos de: Ana y Zoe")
+            st.write("Eva conoce los correos de: Zoe")
+            st.write("Kim conoce los correos de: Mia, Sam, Max y Zoe")
+            st.write("Zoe conoce los correos de: Leo")
+            st.write("Ian conoce los correos de: Leo, Mia y Ben")
+            st.write("Amy conoce los correos de: Eva y Ray")
+            st.write("Ben conoce los correos de: Eli")
+            st.write("Eli conoce los correos de: Max e Ian")
+            st.write("Ava conoce los correos de: Kim y Zoe")
+            st.write("Ray conoce los correos de: Ana, Max, Kim, Ben y Pau")
+            st.write("Pau conoce los correos de: Sam y Amy")
+            st.write("Posteriormente, la empresa ha decidido organizar a sus empleados en varios departamentos de trabajo con "
+                     "el objetivo de mejorar la eficiencia y la colaboración. Precisamente, se quiere obtener 5 departamentos compuestos por 3 empleados cada uno.")
             st.write("Se le solicita a usted como profesional que pueda modelar este problema con algun concepto "
-                     "matematico y pueda señalar en cuales de los 5 departamentos la comunicacion entre todos los"
-                     " empleados del departamento podria ser posible.")
+                     "matematico y pueda sugerir una posible organizacion de los departamentos de tal forma de disminuir los problemas de comunicación."
+                     "Es común que un empleado requiera mandar algún tipo de información a miembros de su mismo departamento, por lo tanto se le solicita que dé "
+                     "una solución empleando el concepto de componentes conexas de un grafo.")
             st.subheader("Resolucion:")
-            A = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-                 [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-                 [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-                 [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                 [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                 [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]]
+            A = [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+ [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+ [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+ [0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+ [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+ [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+ [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+ [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+ [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+ [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]]
             nombres = ["Ana", "Leo", "Mia", "Sam", "Max", "Eva", "Kim", "Zoe", "Ian", "Amy", "Ben", "Eli", "Ava", "Ray", "Pau"]
             df = pd.DataFrame(A, columns=nombres, index=nombres)
             st.write("Primero vamos a definir una matriz de adyacencia que reflejen las relaciones del dato:")
@@ -204,100 +212,84 @@ def resolver_problema(df):
     num_nodos = matriz.shape[0]
     # El conjunto visitados guardara los nodos que ya fueron recorridos para no volver a repetirlos
     visitados = set()
-    # En el siguiente conjunto se guardaran otros conjuntos en el que cada uno agrupa los nodos conectados
-    componentes_conexas = []
-
-    #Se recorre to.do el subgrafo con el algoritmo DFS
-    def buscar_vecinos(nodo):
-        # Se empieza el recorrido con el nodo seleccionado, se coloca en los nodos visitados y tambien
-        # como parte de una componente conexa
-        visitados.add(nodo)
-        componente_actual.add(nodo)
-        # Se buscaran los nodos mas cercanos con el que el nodo actual este conectado
-        for vecino in df.index:
-            # Si se encuentra un nuevo nodo y se encuentra conectado directamente, entonces se aplica
-            # la funcion nuevamente para buscar a sus vecinos directos de este vecino.
-            # Al aplicar la funcion tambien se añade este nodo al componente y se siguen buscando mas vecinos
-            if df.loc[nodo, vecino] == 1 and vecino not in visitados:
-                buscar_vecinos(vecino)
     st.text("El grafo resultante de la matriz es:")
     grafo = grafo_desde_df(df)
     # Crear un objeto dot a partir del grafo
     dot = to_pydot(grafo)
     # Cambiar el color del contorno de los nodos
     node_border_colors = {
-        "Leo": "red",
+        "Leo": "green",
         "Ana": "red",
         "Mia": "red",
-        "Eva": "blue",
+        "Eva": "green",
         "Sam": "blue",
-        "Max": "blue",
-        "Kim": "green",
+        "Max": "red",
+        "Kim": "blue",
         "Zoe": "green",
-        "Ian": "green",
+        "Ian": "orange",
         "Ben": "orange",
         "Eli": "orange",
-        "Amy": "orange",
+        "Amy": "purple",
         "Pau": "purple",
-        "Ava": "purple",
+        "Ava": "blue",
         "Ray": "purple",
     }
-
+    # Visualizar el grafo en Streamlit
     for node in dot.get_nodes():
         node_name = node.get_name().strip('"')  # Elimina las comillas dobles en el nombre del nodo
         node.set("color", node_border_colors.get(node_name, "black"))
-
-    # Visualizar el grafo en Streamlit
     st.graphviz_chart(dot.to_string())
-    st.write("Recordemos la distribucion de los departamentos:")
-    df_dep=pd.DataFrame([list(dep_A),list(dep_B),list(dep_C),list(dep_D),list(dep_E)],
-                        index=["Departamento A","Departamento B","Departamento C","Departamento D","Departamento E"],
-                        columns=["Empleado 1", "Empleado 2", "Empleado 3"])
-    st.dataframe(df_dep)
-    st.write("Se recorrera cada componente conexa con el algoritmo DFS."
-             "\nAsi que para cada nodo, se buscaran los otros nodos a los que se pueden llegar.")
+    # En el siguiente conjunto se guardaran otros conjuntos en el que cada uno agrupa los nodos conectados
+    componentes_fuertemente_conexas = []
+
+    # Función DFS auxiliar para encontrar el orden topologico
+    def dfs_l(nodo, componente_actual):
+        visitados.add(nodo)
+        for vecino in df.index:
+            if df.loc[nodo, vecino] == 1 and vecino not in visitados:
+                dfs_l(vecino, componente_actual)
+        componente_actual.insert(0, nodo)
+
+    # Función DFS para buscar vecinos
+    def dfs(nodo, componente_actual):
+        visitados.add(nodo)
+        componente_actual.add(nodo)
+        for vecino in df.index:
+            if df.loc[nodo, vecino] == 1 and vecino not in visitados:
+                dfs(vecino, componente_actual)
+
+    # Primer paso de Kosaraju: DFS para obtener el ordenamiento topológico inverso
+    pila_orden = []
     for nodo in df.index:
         if nodo not in visitados:
-            st.write("Hay que elegir un nodo cualquiera, uno que no se haya recorrido antes.\n"
-                     "Los nodos ya recorridos son " + str(visitados).replace("set()", "{}") + "\nPara este"
-                     " caso analizaremos el nodo "+str(nodo)+" y buscaremos a todos los nodos a \nlos que pueda llegar.")
+            dfs_l(nodo, pila_orden)
+    pila_orden=pila_orden[::-1]
+    # Transponer la matriz para obtener el grafo dirigido inverso
+    df = df.transpose()
+
+    # Limpiar el conjunto de nodos visitados
+    visitados.clear()
+
+    # Segundo paso de Kosaraju: DFS para encontrar componentes fuertemente conexas
+    while pila_orden:
+        nodo = pila_orden.pop()
+        if nodo not in visitados:
             componente_actual = set()
-            buscar_vecinos(nodo)
+            dfs(nodo, componente_actual)
             st.write("Los nodos que conforman esta componente conexa son: " + str(componente_actual))
-            SG=nx.subgraph(grafo_desde_df(df), componente_actual)
+            SG = nx.subgraph(grafo_desde_df(df), componente_actual)
             dot = nx.nx_pydot.to_pydot(SG)
             for node in dot.get_nodes():
                 node_name = node.get_name().strip('"')  # Elimina las comillas dobles en el nombre del nodo
                 node.set("color", node_border_colors.get(node_name, "black"))
+            dot.set_rankdir("TB")  # Cambiar la dirección de las flechas (TB = de arriba a abajo)
+            # Personalizar las aristas para que sean solo en una dirección
+            for edge in dot.get_edges():
+                edge.set("dir", "end")
             st.graphviz_chart(dot.to_string())
-            componentes_conexas.append(componente_actual)
-            if dep_A <= componente_actual:
-                st.write("Podemos notar que en esta componente, en la que todos los nodos estan conectados, que los"
-                         " miembros del Departamento A se encuentran incluidos, por lo que el Departamento A esta "
-                         "totalmente comunicado.")
+            componentes_fuertemente_conexas.append(componente_actual)
 
-            if dep_B <= componente_actual:
-                st.write("Podemos notar que en esta componente, en la que todos los nodos estan conectados, que los"
-                         " miembros del Departamento B se encuentran incluidos, por lo que el Departamento B esta "
-                         "totalmente comunicado.")
-
-            if dep_C <= componente_actual:
-                st.write("Podemos notar que en esta componente, en la que todos los nodos estan conectados, que los"
-                         " miembros del Departamento C se encuentran incluidos, por lo que el Departamento C esta "
-                         "totalmente comunicado.")
-
-            if dep_D <= componente_actual:
-                st.write("Podemos notar que en esta componente, en la que todos los nodos estan conectados, que los"
-                         " miembros del Departamento D se encuentran incluidos, por lo que el Departamento D esta "
-                         "totalmente comunicado.")
-
-            if dep_E <= componente_actual:
-                st.write("Podemos notar que en esta componente, en la que todos los nodos estan conectados, que los"
-                         " miembros del Departamento E se encuentran incluidos, por lo que el Departamento E esta "
-                         "totalmente comunicado.")
-
-    st.write("Por lo tanto, la solucion de este problema es que solo los Departamentos que tienen a todos sus "
-             "empleados conectados entre si son los Departamentos A y C")
-
-    st.write("Por lo tanto, la solucion de este problema es que solo los Departamentos que tienen a todos sus "
-             "empleados conectados entre si son los Departamentos A y C")
+    st.write("Se observa 5 componentes conexas de 3 miembros cada uno, por lo tanto se sugiere que la "
+             "distribución de departamentos sea de la forma:")
+    for i, componente in enumerate(componentes_fuertemente_conexas):
+        st.write(f"Departamento {i + 1}: {componente}")
