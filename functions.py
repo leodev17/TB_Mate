@@ -179,6 +179,16 @@ def encontrar_componentes_conexas(df):
         if nodo not in visitados:
             dfs_l(nodo, pila_orden)
     pila_orden=pila_orden[::-1]
+    #Explicacion del proceso
+    expander = st.expander("Ver explicacion del proceso")
+    expander.write(
+    "El algoritmo utilizado para la solucion de este problema es el algoritmo de Kosaraju, por lo tanto se realizara un DFS
+    alternativo para encontrar un orden adecuado que nos permita encontrar las componentes conexas, en algunos casos este
+    ordenamiento es llamado 'ordenamiento topologico'. Por lo tanto, al realizar dicho proceso encontramos que el orden
+    es: " + str(pila_orden))
+    st.write("Una vez que tenemos el orden adecuado ahora tenemos que transponer el grafo, este proceso puede conseguirse
+    al sacar la transpuesta a la matriz de adyacencia. Ahora, al realizar un DFS siguiendo un orden desde el ultimo termino 
+    hasta el primero, vamos a obtener de forma efectiva las componentes conexas para el grafo presentado")
     # Transponer la matriz para obtener el grafo dirigido inverso
     df = df.transpose()
 
