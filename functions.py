@@ -201,7 +201,7 @@ def encontrar_componentes_conexas(df):
             componente_actual = set()
             dfs(nodo, componente_actual)
             expander.write("Buscamos a todos los nodos que podemos llegar en el grafo transpuesto a partir del " + str(nodo) +
-                          " para encontrar una componente conexa. Luego, seguimos segun el ordenamiento desde el ultimo al primero" +
+                          " para encontrar una componente conexa " + str(componente_actual) + ". Luego, seguimos segun el ordenamiento desde el ultimo al primero" +
                            " ignorando los nodos ya recorridos")
             st.write("Los nodos que conforman esta componente conexa son: " + str(componente_actual))
             SG = nx.subgraph(grafo_desde_df(df.transpose()), componente_actual)
