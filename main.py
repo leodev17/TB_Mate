@@ -111,7 +111,7 @@ if selected == "Solucion propuesta":
     st.title("Solucion propuesta")
     c1, c2 = st.columns([6,4])
     with c1:
-        st.subheader("Hola estimado usuario. Para realizar el analisis se requiere una matriz simetrica nxn, n ∈ [5, 15]")
+        st.subheader("Hola estimado usuario. Para realizar el analisis se requiere una matriz nxn, n ∈ [5, 15]")
         num_aceptados = np.arange(11) + 5
         num_aceptados = num_aceptados.astype(str)
         tam = st.text_input("¿De que tamaño desea ingresar su matriz de adyacencia?")
