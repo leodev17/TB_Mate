@@ -125,4 +125,4 @@ if selected == "Solucion propuesta":
 if selected == "Creditos":
     st.title("Creditos del proyecto")
     st.write("Este proyecto fue hecho como Trabajo Evaluado para el curso de Matemática Computacional de la UPC en el ciclo 2023-2")
-    st.write("Los miembros participantes para este proyecto son: Leonardo Ccorahua, Ramiro Guzmán, Piero Velarde, Carlos Pingus y Russell Romero")
+    st.write("Proyecto hecho por Leonardo Ccorahua. Esta oportunidad fue usada para investigar y entender cómo implementar algoritmos con grafos usando Python.")
